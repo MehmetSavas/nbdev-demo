@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "nbdev-demo"
+  site-url: "https://MehmetSavas.github.io/nbdev-demo"
+  description: "A demo to showcase nbdev library capabilities"
+  repo-branch: main
+  repo-url: "https://github.com/MehmetSavas/nbdev-demo"
