@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "main_strategy.html",
+    "href": "main_strategy.html",
+    "title": "main_strategy",
+    "section": "",
+    "text": "Main strategy finds half hourly prices by averaging two consequtive prices and multiplying with a constant value.\n\\[ s_j = (s_i + s_{i+1})/2 * 0.98 \\] where \\[ j = i + 0.5 \\] and \\[ i \\in [0, 1, 2, ..., 22] \\]\nGet data and make transformations.\n\nfrom nbdev_demo.data_handler import *\n\n\ndata = some_api_call()\ndf = transform_data(data)\ndf = convert_to_float(df)\ndf.head()\n\n\n\n\n\n\n\n\ntime\nprice\n\n\n\n\n0\n0\n45.0\n\n\n1\n1\n37.0\n\n\n2\n2\n35.0\n\n\n3\n3\n30.0\n\n\n4\n4\n31.0\n\n\n\n\n\n\n\nStart creating the logic.\n\nhalf_hourly_prices = []\nfor ind, row in df.iterrows():\n    if ind != len(df) - 1:\n        half_hourly_prices.append(row['price'])\n        half_hourly_prices.append((row['price'] + df.loc[ind+1, 'price']) / 2 * 0.98)\n    else:\n        half_hourly_prices.append(row['price'])\n        half_hourly_prices.append(row['price'])\n\n\nimport matplotlib.pyplot as plt\n\n\nplt.plot(df.index, df['price'], color='red')\nplt.scatter(np.linspace(0, 24, 49)[0:-1], half_hourly_prices)\n\n&lt;matplotlib.collections.PathCollection&gt;\n\n\n\n\n\n\nsource\n\n\n\n predict_prices (df:pandas.core.frame.DataFrame)\n\nPredict half hourly prices based on hourly prices.\n\n\n\n\nType\nDetails\n\n\n\n\ndf\nDataFrame\nDataframe contains hourly prices\n\n\n\nCreate half hourly prices\n\nhalf_hourly_prices = predict_prices(df)\nhalf_hourly_prices.head()\n\n\n\n\n\n\n\n\ntime\nprices\n\n\n\n\n0\n0.0\n45.00\n\n\n1\n0.5\n40.18\n\n\n2\n1.0\n37.00\n\n\n3\n1.5\n35.28\n\n\n4\n2.0\n35.00"
+  },
+  {
+    "objectID": "main_strategy.html#strategy-explanation",
+    "href": "main_strategy.html#strategy-explanation",
+    "title": "main_strategy",
+    "section": "",
+    "text": "Main strategy finds half hourly prices by averaging two consequtive prices and multiplying with a constant value.\n\\[ s_j = (s_i + s_{i+1})/2 * 0.98 \\] where \\[ j = i + 0.5 \\] and \\[ i \\in [0, 1, 2, ..., 22] \\]\nGet data and make transformations.\n\nfrom nbdev_demo.data_handler import *\n\n\ndata = some_api_call()\ndf = transform_data(data)\ndf = convert_to_float(df)\ndf.head()\n\n\n\n\n\n\n\n\ntime\nprice\n\n\n\n\n0\n0\n45.0\n\n\n1\n1\n37.0\n\n\n2\n2\n35.0\n\n\n3\n3\n30.0\n\n\n4\n4\n31.0\n\n\n\n\n\n\n\nStart creating the logic.\n\nhalf_hourly_prices = []\nfor ind, row in df.iterrows():\n    if ind != len(df) - 1:\n        half_hourly_prices.append(row['price'])\n        half_hourly_prices.append((row['price'] + df.loc[ind+1, 'price']) / 2 * 0.98)\n    else:\n        half_hourly_prices.append(row['price'])\n        half_hourly_prices.append(row['price'])\n\n\nimport matplotlib.pyplot as plt\n\n\nplt.plot(df.index, df['price'], color='red')\nplt.scatter(np.linspace(0, 24, 49)[0:-1], half_hourly_prices)\n\n&lt;matplotlib.collections.PathCollection&gt;\n\n\n\n\n\n\nsource\n\n\n\n predict_prices (df:pandas.core.frame.DataFrame)\n\nPredict half hourly prices based on hourly prices.\n\n\n\n\nType\nDetails\n\n\n\n\ndf\nDataFrame\nDataframe contains hourly prices\n\n\n\nCreate half hourly prices\n\nhalf_hourly_prices = predict_prices(df)\nhalf_hourly_prices.head()\n\n\n\n\n\n\n\n\ntime\nprices\n\n\n\n\n0\n0.0\n45.00\n\n\n1\n0.5\n40.18\n\n\n2\n1.0\n37.00\n\n\n3\n1.5\n35.28\n\n\n4\n2.0\n35.00"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "nbdev-demo",
+    "section": "",
+    "text": "pip install nbdev_demo"
+  },
+  {
+    "objectID": "index.html#install",
+    "href": "index.html#install",
+    "title": "nbdev-demo",
+    "section": "",
+    "text": "pip install nbdev_demo"
+  },
+  {
+    "objectID": "index.html#how-to-use",
+    "href": "index.html#how-to-use",
+    "title": "nbdev-demo",
+    "section": "How to use",
+    "text": "How to use\nUsing nbdev-demo library is so simple! Follow the steps to predict half hourly prices from hourly prices.\n\nfrom nbdev_demo.data_handler import *\nfrom nbdev_demo.main_strategy import predict_prices\n\nGet data first and do transformations.\n\ndata = some_api_call()\ndf = transform_data(data)\ndf = convert_to_float(df)\n\n\ndf.head()\n\n\n\n\n\n\n\n\ntime\nprice\n\n\n\n\n0\n0\n45.0\n\n\n1\n1\n37.0\n\n\n2\n2\n35.0\n\n\n3\n3\n30.0\n\n\n4\n4\n31.0\n\n\n\n\n\n\n\nUse prediction function to predict half hourly prices\n\nhalf_hourly_prices = predict_prices(df)\n\n\nhalf_hourly_prices.head()\n\n\n\n\n\n\n\n\ntime\nprices\n\n\n\n\n0\n0.0\n45.00\n\n\n1\n0.5\n40.18\n\n\n2\n1.0\n37.00\n\n\n3\n1.5\n35.28\n\n\n4\n2.0\n35.00\n\n\n\n\n\n\n\n\nimport matplotlib.pyplot as plt\nplt.plot(half_hourly_prices['prices'])\nplt.show()"
+  },
+  {
+    "objectID": "data_handler.html",
+    "href": "data_handler.html",
+    "title": "data_handler",
+    "section": "",
+    "text": "First, we need to download data from an API.\nsource"
+  },
+  {
+    "objectID": "data_handler.html#data-transformations",
+    "href": "data_handler.html#data-transformations",
+    "title": "data_handler",
+    "section": "Data Transformations",
+    "text": "Data Transformations\nWe need to transform this data into a pandas dataframe.\n\nsource\n\ntransform_data\n\n transform_data (data:list)\n\nTransforms data into dataframe with hours defined.\n\n\n\n\nType\nDetails\n\n\n\n\ndata\nlist\nList of hourly prices\n\n\n\n\nsource\n\n\nconvert_to_float\n\n convert_to_float (data:pandas.core.frame.DataFrame)\n\nConverts price column to float type.\n\n\n\n\nType\nDetails\n\n\n\n\ndata\nDataFrame\nHourly prices dataframe\n\n\n\nTransform the data.\n\ndf = transform_data(data)\ndf.head()\n\n\n\n\n\n\n\n\ntime\nprice\n\n\n\n\n0\n0\n45\n\n\n1\n1\n37\n\n\n2\n2\n35\n\n\n3\n3\n30\n\n\n4\n4\n31\n\n\n\n\n\n\n\nTransform price column to float type.\n\ndf = convert_to_float(df)\ndf.head()\n\n\n\n\n\n\n\n\ntime\nprice\n\n\n\n\n0\n0\n45.0\n\n\n1\n1\n37.0\n\n\n2\n2\n35.0\n\n\n3\n3\n30.0\n\n\n4\n4\n31.0"
+  }
+]
